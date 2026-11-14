@@ -1,4 +1,4 @@
-import ApiError from "../utils/api-error.js";
+import ApiError from '../utils/api-error.js';
 
 export const globalErrorHandler = (err, req, res, next) => {
   let error = err;
@@ -6,11 +6,11 @@ export const globalErrorHandler = (err, req, res, next) => {
 
   // Convert non-ApiError to ApiError
   if (!(error instanceof ApiError)) {
-    const message = error.message || "Something went wrong";
+    const message = error.message || 'Something went wrong';
     error = new ApiError(statusCode, message);
   }
 
-  if (process.env.NODE_ENV !== "test") {
+  if (process.env.NODE_ENV !== 'test') {
     console.error(`[${req.method}] ${req.originalUrl}`, error.message);
   }
 
@@ -19,7 +19,7 @@ export const globalErrorHandler = (err, req, res, next) => {
     statusCode,
     message: error.message,
     errors: error.errors || [],
-    ...(process.env.NODE_ENV === "development" && { stack: error.stack }),
+    ...(process.env.NODE_ENV === 'development' && { stack: error.stack }),
   });
 };
 
