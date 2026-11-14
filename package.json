@@ -12,6 +12,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write \"src/**/*.{js,ts,json,md}\"",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepare": "husky"
   },
   "keywords": [
@@ -36,7 +37,9 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "husky": "^9.1.7",
+    "jest": "^30.5.2",
     "nodemon": "^3.1.11",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "supertest": "^7.3.2"
   }
 }
