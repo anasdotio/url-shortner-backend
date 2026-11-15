@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import ApiError from './utils/api-error.js';
 import apiResponse from './utils/api-response.js';
 import globalErrorHandler from './middleware/global-error-handler.js';
+import config from './config/index.js';
+import authRouter from './routes/auth.service.js';
 
 dotenv.config();
 
@@ -35,6 +37,8 @@ app.get('/health', (req, res) => {
     })
   );
 });
+
+app.use(`${config.apiPrefix}/auth`, authRouter);
 
 app.use((req, res, next) => {
   next(new ApiError(404, `Route not found: ${req.originalUrl}`));
