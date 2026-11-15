@@ -9,10 +9,7 @@ const createToken = (userId) =>
   });
 
 export const createUser = async (userData) => {
-  const existingUser = await userDao.findUserByUsernameOrEmail(
-    userData.username,
-    userData.email
-  );
+  const existingUser = await userDao.findUserByUsernameOrEmail(userData.username, userData.email);
 
   if (existingUser) {
     throw new ApiError(409, 'Username or email already exists');

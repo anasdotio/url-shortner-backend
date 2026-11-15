@@ -15,13 +15,16 @@ export const register = async (req, res) => {
   const password = required(req.body.password, 'Password');
   const result = await authService.createUser({ username, email, password });
 
-  return res.status(201).json(
-    apiResponse({ statusCode: 201, data: result, message: 'User registered successfully' })
-  );
+  return res
+    .status(201)
+    .json(apiResponse({ statusCode: 201, data: result, message: 'User registered successfully' }));
 };
 
 export const login = async (req, res) => {
-  const identifier = required(req.body.identifier || req.body.email || req.body.username, 'Username or email');
+  const identifier = required(
+    req.body.identifier || req.body.email || req.body.username,
+    'Username or email'
+  );
   const password = required(req.body.password, 'Password');
   const result = await authService.loginUser(identifier, password);
 
@@ -30,5 +33,7 @@ export const login = async (req, res) => {
 
 export const currentUser = async (req, res) => {
   const user = await authService.getUserById(req.user.id);
-  return res.status(200).json(apiResponse({ data: { user }, message: 'Current user fetched successfully' }));
+  return res
+    .status(200)
+    .json(apiResponse({ data: { user }, message: 'Current user fetched successfully' }));
 };
