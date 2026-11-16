@@ -49,7 +49,6 @@ export const getUrlsByUser = async (userId) => {
 };
 
 export const updateUrl = async (id, updateData) => {
-
   const url = await urlDao.findUrlById(id);
 
   if (!url) {
@@ -64,10 +63,8 @@ export const updateUrl = async (id, updateData) => {
 
   await redisClient.set(`url:${updatedUrl.shortUrl}`, JSON.stringify(updatedUrl));
 
-return updatedUrl;
-
-
-}
+  return updatedUrl;
+};
 
 export const deleteUrl = async (id) => {
   const url = await urlDao.findUrlById(id);

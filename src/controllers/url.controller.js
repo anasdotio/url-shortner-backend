@@ -43,7 +43,6 @@ export const getUrlsByUser = async (req, res) => {
     .json(apiResponse({ data: urls, message: 'URLs fetched successfully for the user' }));
 };
 
-
 export const updateUrl = async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
