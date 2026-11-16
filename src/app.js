@@ -8,6 +8,7 @@ import apiResponse from './utils/api-response.js';
 import globalErrorHandler from './middleware/global-error-handler.js';
 import config from './config/index.js';
 import authRouter from './routes/auth.service.js';
+import urlRouter from './routes/url.route.js';
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use(`${config.apiPrefix}/auth`, authRouter);
+app.use(`${config.apiPrefix}/url`, urlRouter);
 
 app.use((req, res, next) => {
   next(new ApiError(404, `Route not found: ${req.originalUrl}`));
