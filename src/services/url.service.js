@@ -39,7 +39,6 @@ export const findUrlByShortUrl = async (shortUrl) => {
 };
 
 export const getUrlsByUser = async (userId) => {
-
   const urls = await urlDao.findUrlsByUser(userId);
 
   if (!urls) {
@@ -47,6 +46,4 @@ export const getUrlsByUser = async (userId) => {
   }
 
   return urls;
-
 };
-
