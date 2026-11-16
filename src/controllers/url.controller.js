@@ -42,3 +42,24 @@ export const getUrlsByUser = async (req, res) => {
     .status(200)
     .json(apiResponse({ data: urls, message: 'URLs fetched successfully for the user' }));
 };
+
+export const updateUrl = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+
+  const updatedUrl = await urlService.updateUrl(id, updateData);
+
+  return res
+    .status(200)
+    .json(apiResponse({ data: updatedUrl, message: 'URL updated successfully' }));
+};
+
+export const deleteUrl = async (req, res) => {
+  const { id } = req.params;
+
+  const deletedUrl = await urlService.deleteUrl(id);
+
+  return res
+    .status(200)
+    .json(apiResponse({ data: deletedUrl, message: 'URL deleted successfully' }));
+};

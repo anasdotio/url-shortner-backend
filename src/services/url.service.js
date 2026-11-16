@@ -47,3 +47,35 @@ export const getUrlsByUser = async (userId) => {
 
   return urls;
 };
+
+export const updateUrl = async (id, updateData) => {
+  const url = await urlDao.findUrlById(id);
+
+  if (!url) {
+    throw new ApiError(404, 'URL not found');
+  }
+
+  const updatedUrl = await urlDao.updateUrl(id, updateData);
+
+  if (!updatedUrl) {
+    throw new ApiError(500, 'Failed to update URL');
+  }
+
+  await redisClient.set(`url:${updatedUrl.shortUrl}`, JSON.stringify(updatedUrl));
+
+  return updatedUrl;
+};
+
+export const deleteUrl = async (id) => {
+  const url = await urlDao.findUrlById(id);
+
+  if (!url) {
+    throw new ApiError(404, 'URL not found');
+  }
+
+  await urlDao.deleteUrl(id);
+
+  await redisClient.del(`url:${url.shortUrl}`);
+
+  return url;
+};

@@ -15,3 +15,15 @@ export const incrementAccessCount = async (urlId) => {
 export const findUrlsByUser = async (userId) => {
   return Url.find({ createdBy: userId }).sort({ createdAt: -1 });
 };
+
+export const findUrlById = async (urlId) => {
+  return Url.findById(urlId);
+};
+
+export const updateUrl = async (urlId, updateData) => {
+  return Url.findByIdAndUpdate(urlId, updateData, { new: true });
+};
+
+export const deleteUrl = async (urlId) => {
+  return Url.findByIdAndDelete(urlId);
+};
