@@ -1,3 +1,4 @@
+import redisClient from '../config/redis.js';
 import * as urlDao from '../dao/url.dao.js';
 import ApiError from '../utils/api-error.js';
 import generateShortCode from '../utils/generate-short-code.js';
@@ -11,10 +12,19 @@ export const createUrl = async (urlData) => {
     throw new Error('Failed to create URL');
   }
 
+  await redisClient.set(`url:${newUrl.shortUrl}`, JSON.stringify(newUrl));
+
   return newUrl;
 };
 
 export const findUrlByShortUrl = async (shortUrl) => {
+  const cachedUrl = await redisClient.get(`url:${shortUrl}`);
+
+  if (cachedUrl) {
+	await urlDao.incrementAccessCount(JSON.parse(cachedUrl)._id); // Increment access count in the database
+    return JSON.parse(cachedUrl);
+  }
+
   const url = await urlDao.findUrlByShortUrl(shortUrl);
 
   if (!url) {
@@ -22,6 +32,8 @@ export const findUrlByShortUrl = async (shortUrl) => {
   }
 
   await urlDao.incrementAccessCount(url._id);
+
+  await redisClient.set(`url:${url.shortUrl}`, JSON.stringify(url));
 
   return url;
 };

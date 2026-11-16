@@ -9,6 +9,7 @@ import globalErrorHandler from './middleware/global-error-handler.js';
 import config from './config/index.js';
 import authRouter from './routes/auth.service.js';
 import urlRouter from './routes/url.route.js';
+import redisClient from './config/redis.js';
 
 dotenv.config();
 
@@ -26,8 +27,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.get('/', (req, res) => {
-  res.status(200).json(apiResponse({ message: 'Welcome to urlShortner-backend API' }));
+app.get('/redis', async (req, res) => {
+
+ const ping = await redisClient.ping();
+
+  return res.status(200).json(
+    apiResponse({
+      data: { ping },
+      message: 'Redis ping successful',
+    })
+  );
+
+
 });
 
 app.get('/health', (req, res) => {
