@@ -5,8 +5,6 @@ import generateShortCode from '../utils/generate-short-code.js';
 export const createUrl = async (urlData) => {
   urlData.shortUrl = generateShortCode();
 
-
-
   const newUrl = await urlDao.createUrl(urlData);
 
   if (!newUrl) {
@@ -17,17 +15,13 @@ export const createUrl = async (urlData) => {
 };
 
 export const findUrlByShortUrl = async (shortUrl) => {
+  const url = await urlDao.findUrlByShortUrl(shortUrl);
 
-	const url = await urlDao.findUrlByShortUrl(shortUrl);
+  if (!url) {
+    throw new ApiError(404, 'URL not found');
+  }
 
-	if (!url) {
-		throw new ApiError(404, 'URL not found');
-	}
+  await urlDao.incrementAccessCount(url._id);
 
-	await urlDao.incrementAccessCount(url._id);
-
-
-	return url;
-
-
-}
+  return url;
+};

@@ -12,7 +12,7 @@ const urlSchema = new Schema(
       required: [true, 'Short URL is required'],
       trim: true,
       unique: [true, 'Short URL already exists'],
-	  index: true,
+      index: true,
     },
     createdBy: {
       type: Schema.Types.ObjectId,

@@ -8,11 +8,13 @@ export const createUrl = async (req, res) => {
   console.log('req.user:', req.user); // Log the user object to see its structure
 
   const urlData = {
-	originalUrl,
-	createdBy : req.user.id,
-  }
+    originalUrl,
+    createdBy: req.user.id,
+  };
 
   const newUrl = await urlService.createUrl(urlData);
+
+  console.log('baseurl', `http://localhost:8000/api/v1/url/${newUrl.shortUrl}`); // Log the base URL for debugging
 
   return res
     .status(201)
@@ -23,10 +25,10 @@ export const getUrlByShortUrl = async (req, res) => {
   const { shortUrl } = req.params;
 
   if (!shortUrl) {
-	throw new ApiError(400, 'Short URL is required');
+    throw new ApiError(400, 'Short URL is required');
   }
 
   const url = await urlService.findUrlByShortUrl(shortUrl);
 
-  return res.redirect( 302 , url.originalUrl);
-}
+  return res.redirect(302, url.originalUrl);
+};
