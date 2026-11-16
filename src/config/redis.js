@@ -1,10 +1,6 @@
-import { Redis } from 'ioredis';
+import  Redis  from 'ioredis';
 
-const redisClient = new Redis({
-  host: process.env.REDIS_HOST || 'localhost',
-  port: process.env.REDIS_PORT || 6379,
-  db: process.env.REDIS_DB || 0,
-});
+const redisClient = new Redis("redis://localhost:6379");
 
 redisClient.on('connect', () => {
   console.log('Connected to Redis');
@@ -25,7 +21,10 @@ redisClient.on('reconnecting', () => {
 export const connectRedis = async () => {
   console.log('Connecting to Redis...');
 
-  await redisClient.connect();
+  if(!redisClient.status || redisClient.status === 'end') {
+	await redisClient.connect();
+  }
+
 };
 
 export default redisClient;
