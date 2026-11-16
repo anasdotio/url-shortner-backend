@@ -11,3 +11,7 @@ export const findUrlByShortUrl = async (shortUrl) => {
 export const incrementAccessCount = async (urlId) => {
   return Url.findByIdAndUpdate(urlId, { $inc: { accessCount: 1 } }, { new: true });
 };
+
+export const findUrlsByUser = async (userId) => {
+  return Url.find({ createdBy: userId }).sort({ createdAt: -1 });
+};

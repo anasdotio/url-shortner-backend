@@ -21,7 +21,7 @@ export const findUrlByShortUrl = async (shortUrl) => {
   const cachedUrl = await redisClient.get(`url:${shortUrl}`);
 
   if (cachedUrl) {
-	await urlDao.incrementAccessCount(JSON.parse(cachedUrl)._id); // Increment access count in the database
+    await urlDao.incrementAccessCount(JSON.parse(cachedUrl)._id); // Increment access count in the database
     return JSON.parse(cachedUrl);
   }
 
@@ -37,3 +37,16 @@ export const findUrlByShortUrl = async (shortUrl) => {
 
   return url;
 };
+
+export const getUrlsByUser = async (userId) => {
+
+  const urls = await urlDao.findUrlsByUser(userId);
+
+  if (!urls) {
+    throw new ApiError(404, 'No URLs found for this user');
+  }
+
+  return urls;
+
+};
+

@@ -32,3 +32,13 @@ export const getUrlByShortUrl = async (req, res) => {
 
   return res.redirect(302, url.originalUrl);
 };
+
+export const getUrlsByUser = async (req, res) => {
+  const userId = req.user.id;
+
+  const urls = await urlService.getUrlsByUser(userId);
+
+  return res
+    .status(200)
+    .json(apiResponse({ data: urls, message: 'URLs fetched successfully for the user' }));
+};

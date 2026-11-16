@@ -7,5 +7,6 @@ const router = Router();
 
 router.post('/shorten', authenticate, asyncHandler(urlController.createUrl));
 router.get('/:shortUrl', asyncHandler(urlController.getUrlByShortUrl));
+router.get('/user/urls', authenticate, asyncHandler(urlController.getUrlsByUser));
 
 export default router;
