@@ -1,11 +1,15 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const config = {
   port: process.env.PORT || 3000,
-  nodeEnv: process.env.NODE_ENV || "development",
-  corsOrigin: process.env.CORS_ORIGIN || "*",
-  apiPrefix: process.env.API_PREFIX || "/api/v1",
-  mongodbUri: process.env.MONGODB_URI || "mongodb://localhost:27017/mydb",
-  
-  
+  nodeEnv: process.env.NODE_ENV || 'development',
+  corsOrigin: process.env.CORS_ORIGIN || '*',
+  apiPrefix: process.env.API_PREFIX || '/api/v1',
+  mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/mydb',
+  jwtSecret: process.env.JWT_SECRET || 'development-only-jwt-secret',
+  jwtExpiration: process.env.JWT_EXPIRATION || '7d',
 };
 
 export default config;

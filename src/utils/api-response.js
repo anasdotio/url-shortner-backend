@@ -1,8 +1,4 @@
-export const apiResponse = ({
-  statusCode = 200,
-  data = null,
-  message = "Success",
-}) => {
+export const apiResponse = ({ statusCode = 200, data = null, message = 'Success' }) => {
   return {
     success: statusCode < 400,
     statusCode,
