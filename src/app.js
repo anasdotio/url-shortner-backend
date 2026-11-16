@@ -28,8 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/redis', async (req, res) => {
-
- const ping = await redisClient.ping();
+  const ping = await redisClient.ping();
 
   return res.status(200).json(
     apiResponse({
@@ -37,8 +36,6 @@ app.get('/redis', async (req, res) => {
       message: 'Redis ping successful',
     })
   );
-
-
 });
 
 app.get('/health', (req, res) => {
